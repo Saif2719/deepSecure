@@ -4,14 +4,14 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 
 from load_dataset import DeepfakeDataset
-from model import get_model   # adjust name if different
+from model import get_model  
 
-# ---------- Config ----------
-BATCH_SIZE = 4        # small for CPU
-EPOCHS = 5            # keep low for now
+
+BATCH_SIZE = 4        
+EPOCHS = 10         # low for now
 LR = 0.0001
 DEVICE = "cpu"        # no GPU
-# ----------------------------
+
 
 # Datasets
 train_dataset = DeepfakeDataset("dataset/train")

@@ -4,6 +4,7 @@ from mtcnn import MTCNN
 
 detector = MTCNN()
 
+
 def detect_facial_boundary_issue(image_path):
     img = cv2.imread(image_path)
     if img is None:
