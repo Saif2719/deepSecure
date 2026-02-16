@@ -1,6 +1,5 @@
-from predict_one import IMAGE_PATH
 from suspicious_factors import detect_facial_boundary_issue
 
-result = detect_facial_boundary_issue("IMAGE_PATH")
+result = detect_facial_boundary_issue("test.jpg")
 
 print("Facial boundary inconsistency:", result)

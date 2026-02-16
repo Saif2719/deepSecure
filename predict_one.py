@@ -9,7 +9,7 @@ from suspicious_factors import (
     detect_skin_tone_irregularity,
     detect_gan_artifacts
 )
-IMAGE_PATH = "profile-4.jpg"
+
 
 DEVICE = "cpu"
 MODEL_PATH = "output/deepfake_model.pth"
@@ -81,4 +81,4 @@ def predict(image_path):
 
 # --------- Test ---------
 if __name__ == "__main__":
-    predict(IMAGE_PATH)   # change image path if needed
+    predict("profile-2.jpg")   # change image path if needed
