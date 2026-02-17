@@ -10,6 +10,7 @@ BATCH_SIZE = 2               # EfficientNet-B4 is heavy
 EPOCHS = 10
 LR = 0.0001
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"   # auto GPU for Kaggle
+print("Using device:", DEVICE)
 
 # Datasets
 train_dataset = DeepfakeDataset("/kaggle/input/1000-videos-split/1000_videos/train")
