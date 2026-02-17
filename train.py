@@ -12,8 +12,8 @@ LR = 0.0001
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"   # auto GPU for Kaggle
 
 # Datasets
-train_dataset = DeepfakeDataset("dataset/train")
-val_dataset = DeepfakeDataset("dataset/validation")   # FIXED: correct folder name
+train_dataset = DeepfakeDataset("/kaggle/input/1000-videos-split/1000_videos/train")
+val_dataset = DeepfakeDataset("/kaggle/input/1000-videos-split/1000_videos/validation")   # FIXED: correct folder name
 
 train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False)

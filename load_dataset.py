@@ -44,7 +44,7 @@ class DeepfakeDataset(Dataset):
 
 # 🔒 IMPORTANT: test code MUST be inside this block
 if __name__ == "__main__":
-    dataset = DeepfakeDataset("dataset/train")  # Kaggle or local path
+    dataset = DeepfakeDataset("/kaggle/input/1000-videos-split/1000_videos/train")  # Kaggle or local path
 
     real_count = dataset.labels.count(0)
     fake_count = dataset.labels.count(1)
