@@ -9,6 +9,7 @@ from suspicious_factors import (
     detect_skin_tone_irregularity,
     detect_gan_artifacts
 )
+
 IMAGE_PATH = "profile-4.jpg"
 
 DEVICE = "cpu"
@@ -20,10 +21,14 @@ model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
 model.to(DEVICE)
 model.eval()
 
-# Image transform (same as training)
+# EfficientNet-B4 compatible transform
 transform = transforms.Compose([
-    transforms.Resize((224, 224)),
+    transforms.Resize((380, 380)),
     transforms.ToTensor(),
+    transforms.Normalize(
+        mean=[0.485, 0.456, 0.406],
+        std=[0.229, 0.224, 0.225]
+    )
 ])
 
 def predict(image_path):
@@ -39,10 +44,8 @@ def predict(image_path):
 
     trust_score = int(p_real * 100)
 
-    # Final label
     label = "FAKE" if p_fake > p_real else "REAL"
 
-    # Risk level (based on Trust Score)
     if trust_score >= 80:
         risk = "LOW"
     elif trust_score >= 40:
@@ -54,7 +57,6 @@ def predict(image_path):
     print(f"Trust Score: {trust_score}/100")
     print(f"Risk Level: {risk}")
 
-    # Suspicious factors ONLY for FAKE
     if label == "FAKE":
         suspicious = []
 
@@ -79,6 +81,7 @@ def predict(image_path):
     else:
         print("\nSuspicious Factors: none")
 
+
 # --------- Test ---------
 if __name__ == "__main__":
-    predict(IMAGE_PATH)   # change image path if needed
+    predict(IMAGE_PATH)

@@ -12,15 +12,24 @@ class DeepfakeDataset(Dataset):
 
         for label_name, label_value in [("real", 0), ("fake", 1)]:
             class_dir = os.path.join(root_dir, label_name)
+
+            if not os.path.exists(class_dir):
+                continue
+
             for img in os.listdir(class_dir):
                 if img.lower().endswith((".jpg", ".png", ".jpeg")):
                     self.image_paths.append(os.path.join(class_dir, img))
                     self.labels.append(label_value)
 
+        # EfficientNet-B4 compatible transforms
         self.transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor()
-])
+            transforms.Resize((380, 380)),
+            transforms.ToTensor(),
+            transforms.Normalize(
+                mean=[0.485, 0.456, 0.406],
+                std=[0.229, 0.224, 0.225]
+            )
+        ])
 
 
     def __len__(self):
@@ -35,7 +44,7 @@ class DeepfakeDataset(Dataset):
 
 # 🔒 IMPORTANT: test code MUST be inside this block
 if __name__ == "__main__":
-    dataset = DeepfakeDataset("dataset/processed/train")
+    dataset = DeepfakeDataset("dataset/train")  # Kaggle or local path
 
     real_count = dataset.labels.count(0)
     fake_count = dataset.labels.count(1)
@@ -44,5 +53,5 @@ if __name__ == "__main__":
     print("Fake images:", fake_count)
 
     img, label = dataset[0]
-    print("Sample image shape:", img.shape)
+    print("Sample image shape:", img.shape)  # [3, 380, 380]
     print("Sample label:", label)

@@ -4,18 +4,16 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 
 from load_dataset import DeepfakeDataset
-from model import get_model  
+from model import get_model
 
-
-BATCH_SIZE = 4        
-EPOCHS = 10         # low for now
+BATCH_SIZE = 2               # EfficientNet-B4 is heavy
+EPOCHS = 10
 LR = 0.0001
-DEVICE = "cpu"        # no GPU
-
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"   # auto GPU for Kaggle
 
 # Datasets
 train_dataset = DeepfakeDataset("dataset/train")
-val_dataset = DeepfakeDataset("dataset/val")
+val_dataset = DeepfakeDataset("dataset/validation")   # FIXED: correct folder name
 
 train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False)
@@ -31,7 +29,7 @@ optimizer = optim.Adam(model.parameters(), lr=LR)
 # ---------- Training Loop ----------
 for epoch in range(EPOCHS):
     model.train()
-    total_loss = 0
+    total_loss = 0.0
 
     for images, labels in train_loader:
         images = images.to(DEVICE)
@@ -46,7 +44,6 @@ for epoch in range(EPOCHS):
         total_loss += loss.item()
 
     avg_loss = total_loss / len(train_loader)
-
     print(f"Epoch [{epoch+1}/{EPOCHS}] - Train Loss: {avg_loss:.4f}")
 
 print("Training finished")

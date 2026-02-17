@@ -4,7 +4,7 @@ import os
 INPUT_DIR = "dataset/train"
 OUTPUT_DIR = "dataset/processed/train"
 
-IMG_SIZE = 299  # required for Xception later
+IMG_SIZE = 380  # required for Xception later
 
 os.makedirs(os.path.join(OUTPUT_DIR, "real"), exist_ok=True)
 os.makedirs(os.path.join(OUTPUT_DIR, "fake"), exist_ok=True)
