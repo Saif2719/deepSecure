@@ -10,7 +10,7 @@ from suspicious_factors import (
     detect_gan_artifacts
 )
 
-IMAGE_PATH = "test2.png"
+IMAGE_PATH = "test3.jpeg"
 
 DEVICE = "cpu"
 MODEL_PATH = "output/deepfake_model.pth"
